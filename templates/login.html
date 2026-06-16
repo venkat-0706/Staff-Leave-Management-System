@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SLMS | Login</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#eef2ff,#f8fafc);
+    overflow-x:hidden;
+    position:relative;
+}
+
+/* Background Blobs */
+
+.blob{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(100px);
+    opacity:.5;
+    z-index:0;
+}
+
+.blob1{
+    width:350px;
+    height:350px;
+    background:#4f8cff;
+    top:-120px;
+    left:-100px;
+}
+
+.blob2{
+    width:300px;
+    height:300px;
+    background:#8b5cf6;
+    bottom:-100px;
+    right:-100px;
+}
+
+/* Main Container */
+
+.container{
+    width:95%;
+    max-width:1100px;
+    z-index:10;
+}
+
+.login-card{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+
+    background:#fff;
+
+    border-radius:30px;
+
+    overflow:hidden;
+
+    box-shadow:
+    0 25px 60px rgba(15,23,42,.08);
+}
+
+/* Left Side */
+
+.left{
+    background:#f8fafc;
+    padding:70px 60px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.logo{
+    font-size:72px;
+    font-weight:800;
+    color:#111827;
+    margin-bottom:10px;
+}
+
+.title{
+    font-size:32px;
+    font-weight:700;
+    color:#111827;
+    line-height:1.3;
+    margin-bottom:20px;
+}
+
+.description{
+    color:#6b7280;
+    line-height:1.9;
+    font-size:16px;
+    margin-bottom:40px;
+}
+
+.stats{
+    display:flex;
+    gap:18px;
+    flex-wrap:wrap;
+}
+
+.stat{
+    background:white;
+    padding:20px;
+    border-radius:18px;
+    min-width:120px;
+
+    box-shadow:
+    0 10px 30px rgba(0,0,0,.05);
+}
+
+.stat h3{
+    color:#1674e0;
+    font-size:32px;
+}
+
+.stat p{
+    color:#6b7280;
+    font-size:14px;
+}
+
+/* Right Side */
+
+.right{
+    padding:70px 60px;
+    display:flex;
+    align-items:center;
+}
+
+.form-box{
+    width:100%;
+}
+
+.form-box h1{
+    color:#111827;
+    font-size:48px;
+    margin-bottom:10px;
+}
+
+.subtitle{
+    color:#6b7280;
+    margin-bottom:35px;
+}
+
+/* Django Messages */
+
+.messages{
+    margin-bottom:20px;
+}
+
+.messages .message{
+    background:#fee2e2;
+    color:#dc2626;
+    padding:12px;
+    border-radius:10px;
+    margin-bottom:10px;
+    font-size:14px;
+}
+
+/* Inputs */
+
+.input-group{
+    margin-bottom:20px;
+}
+
+.input-group label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:500;
+    color:#374151;
+}
+
+.input-box{
+    position:relative;
+}
+
+.input-box input{
+    width:100%;
+    padding:15px;
+    padding-right:50px;
+
+    border:1px solid #d1d5db;
+    border-radius:14px;
+
+    font-size:15px;
+
+    transition:.3s;
+}
+
+.input-box input:focus{
+    outline:none;
+    border-color:#1674e0;
+    box-shadow:0 0 0 4px rgba(22,116,224,.12);
+}
+
+.input-box i{
+    position:absolute;
+    right:16px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#6b7280;
+    cursor:pointer;
+}
+
+/* Button */
+
+.login-btn{
+    width:100%;
+    border:none;
+    background:#1674e0;
+    color:white;
+
+    padding:15px;
+    border-radius:14px;
+
+    font-size:16px;
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.login-btn:hover{
+    background:#0f5dc4;
+    transform:translateY(-2px);
+}
+
+/* Links */
+
+.bottom-text{
+    text-align:center;
+    margin-top:20px;
+    color:#6b7280;
+}
+
+.bottom-text a{
+    color:#1674e0;
+    text-decoration:none;
+    font-weight:600;
+}
+
+.bottom-text a:hover{
+    text-decoration:underline;
+}
+
+/* Responsive */
+
+@media(max-width:900px){
+
+.login-card{
+    grid-template-columns:1fr;
+}
+
+.left{
+    display:none;
+}
+
+.right{
+    padding:40px 30px;
+}
+
+.form-box h1{
+    font-size:38px;
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+
+<div class="container">
+
+<div class="login-card">
+
+<!-- LEFT SIDE -->
+
+<div class="left" data-aos="fade-right">
+
+<div class="logo">SLMS</div>
+
+<div class="title">
+Manage Staff Leave<br>
+Beautifully.
+</div>
+
+<div class="description">
+Access your Staff Leave Management account and manage leave
+requests, approvals, staff records and workflows efficiently.
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<h3>100+</h3>
+<p>Employees</p>
+</div>
+
+<div class="stat">
+<h3>500+</h3>
+<p>Requests</p>
+</div>
+
+<div class="stat">
+<h3>99%</h3>
+<p>Accuracy</p>
+</div>
+
+</div>
+
+</div>
+
+<!-- RIGHT SIDE -->
+
+<div class="right">
+
+<div class="form-box" data-aos="fade-left">
+
+<h1>Welcome Back</h1>
+
+<p class="subtitle">
+Login to continue to SLMS
+</p>
+
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+        <div class="message">
+            {{ message }}
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<form method="POST">
+
+{% csrf_token %}
+
+<div class="input-group">
+<label>Username or Email</label>
+
+<div class="input-box">
+<input
+type="text"
+name="username_or_email"
+placeholder="Enter username or email"
+required>
+</div>
+</div>
+
+<div class="input-group">
+
+<label>Password</label>
+
+<div class="input-box">
+
+<input
+type="password"
+id="password"
+name="password"
+placeholder="Enter password"
+required>
+
+<i class="fa-solid fa-eye"
+onclick="togglePassword()"></i>
+
+</div>
+
+</div>
+
+<button type="submit" class="login-btn">
+Login
+</button>
+
+<div class="bottom-text">
+Don't have an account?
+<a href="{% url 'register' %}">
+Register Here
+</a>
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+<script>
+
+AOS.init({
+    duration:1000,
+    once:true
+});
+
+function togglePassword(){
+
+    const password =
+    document.getElementById("password");
+
+    const icon =
+    document.querySelector(".input-box i");
+
+    if(password.type === "password"){
+        password.type = "text";
+        icon.classList.replace("fa-eye","fa-eye-slash");
+    }else{
+        password.type = "password";
+        icon.classList.replace("fa-eye-slash","fa-eye");
+    }
+}
+
+</script>
+
+</body>
+</html>

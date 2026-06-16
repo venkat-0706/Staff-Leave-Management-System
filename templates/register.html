@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SLMS | Create Account</title>
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<!-- AOS -->
+<link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+<style>
+
+:root{
+    --primary:#0071e3;
+    --dark:#1d1d1f;
+    --gray:#6e6e73;
+    --white:#ffffff;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Inter',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    background:linear-gradient(
+        135deg,
+        #f5f7fa,
+        #e8ecf3,
+        #ffffff
+    );
+    position:relative;
+}
+
+/* ===========================
+   APPLE BACKGROUND BLOBS
+=========================== */
+
+.blob{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(100px);
+    animation:float 10s ease-in-out infinite;
+}
+
+.blob1{
+    width:350px;
+    height:350px;
+    background:rgba(0,113,227,.15);
+    top:-80px;
+    left:-80px;
+}
+
+.blob2{
+    width:300px;
+    height:300px;
+    background:rgba(255,105,180,.12);
+    bottom:-80px;
+    right:-80px;
+}
+
+.blob3{
+    width:250px;
+    height:250px;
+    background:rgba(0,255,200,.12);
+    top:40%;
+    left:60%;
+}
+
+@keyframes float{
+    0%,100%{
+        transform:translateY(0px);
+    }
+    50%{
+        transform:translateY(-30px);
+    }
+}
+
+/* ===========================
+   MAIN CONTAINER
+=========================== */
+
+.container{
+    width:100%;
+    max-width:1100px;
+    padding:20px;
+    z-index:10;
+}
+
+.card{
+    display:flex;
+    min-height:700px;
+
+    background:rgba(255,255,255,.75);
+
+    backdrop-filter:blur(25px);
+
+    border:1px solid rgba(255,255,255,.6);
+
+    border-radius:35px;
+
+    overflow:hidden;
+
+    box-shadow:
+    0 25px 60px rgba(0,0,0,.08),
+    0 10px 20px rgba(0,0,0,.05);
+}
+
+/* ===========================
+   LEFT PANEL
+=========================== */
+
+.left{
+    flex:1;
+    padding:70px;
+
+    background:
+    linear-gradient(
+        180deg,
+        rgba(255,255,255,.6),
+        rgba(255,255,255,.2)
+    );
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.logo{
+    font-size:60px;
+    font-weight:800;
+    color:var(--dark);
+    letter-spacing:-3px;
+    margin-bottom:15px;
+}
+
+.tagline{
+    font-size:34px;
+    font-weight:700;
+    color:var(--dark);
+    line-height:1.2;
+    margin-bottom:20px;
+}
+
+.description{
+    color:var(--gray);
+    line-height:1.9;
+    font-size:15px;
+    max-width:450px;
+}
+
+.stats{
+    display:flex;
+    gap:15px;
+    margin-top:40px;
+    flex-wrap:wrap;
+}
+
+.stat{
+    background:rgba(255,255,255,.65);
+
+    backdrop-filter:blur(15px);
+
+    padding:20px;
+
+    border-radius:20px;
+
+    min-width:130px;
+
+    transition:.4s;
+
+    box-shadow:
+    0 10px 25px rgba(0,0,0,.05);
+}
+
+.stat:hover{
+    transform:translateY(-10px);
+}
+
+.stat h3{
+    color:var(--primary);
+    font-size:26px;
+    margin-bottom:5px;
+}
+
+.stat p{
+    color:var(--gray);
+    font-size:13px;
+}
+
+/* ===========================
+   RIGHT PANEL
+=========================== */
+
+.right{
+    flex:1;
+    background:white;
+    padding:60px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.form-box{
+    width:100%;
+    max-width:420px;
+}
+
+.form-title{
+    font-size:34px;
+    font-weight:700;
+    color:var(--dark);
+}
+
+.form-subtitle{
+    color:var(--gray);
+    margin-top:8px;
+    margin-bottom:30px;
+}
+
+/* ===========================
+   DJANGO MESSAGES
+=========================== */
+
+.messages{
+    margin-bottom:20px;
+}
+
+.messages div{
+    background:#ffe5e5;
+    color:#d60000;
+    padding:12px;
+    border-radius:12px;
+    margin-bottom:10px;
+}
+
+/* ===========================
+   INPUTS
+=========================== */
+
+.input-group{
+    margin-bottom:22px;
+}
+
+.input-group label{
+    display:block;
+    margin-bottom:8px;
+    color:#444;
+    font-size:14px;
+    font-weight:500;
+}
+
+.input-group input,
+.input-group select{
+    width:100%;
+    padding:15px;
+
+    border:1px solid #d7dbe0;
+
+    border-radius:14px;
+
+    outline:none;
+
+    transition:.3s;
+
+    font-size:15px;
+}
+
+.input-group input:focus,
+.input-group select:focus{
+    border-color:var(--primary);
+
+    box-shadow:
+    0 0 0 5px rgba(0,113,227,.12);
+}
+
+/* ===========================
+   PASSWORD
+=========================== */
+
+.password-box{
+    position:relative;
+}
+
+.password-box i{
+    position:absolute;
+    right:15px;
+    top:18px;
+    color:#888;
+    cursor:pointer;
+}
+
+/* ===========================
+   STRENGTH BAR
+=========================== */
+
+.strength{
+    margin-top:8px;
+    height:6px;
+    background:#e4e4e4;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.strength span{
+    display:block;
+    height:100%;
+    width:0%;
+    transition:.4s;
+}
+
+/* ===========================
+   BUTTON
+=========================== */
+
+button{
+    width:100%;
+    padding:16px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:var(--primary);
+
+    color:white;
+
+    font-size:16px;
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+button:hover{
+    transform:translateY(-2px);
+
+    box-shadow:
+    0 15px 30px rgba(0,113,227,.25);
+}
+
+/* ===========================
+   LOGIN LINK
+=========================== */
+
+.login-link{
+    margin-top:20px;
+    text-align:center;
+    color:var(--gray);
+}
+
+.login-link a{
+    color:var(--primary);
+    text-decoration:none;
+    font-weight:600;
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+
+@media(max-width:950px){
+
+.card{
+    flex-direction:column;
+}
+
+.left{
+    text-align:center;
+    padding:50px 30px;
+}
+
+.description{
+    margin:auto;
+}
+
+.stats{
+    justify-content:center;
+}
+
+.right{
+    padding:40px 25px;
+}
+
+}
+
+@media(max-width:600px){
+
+.logo{
+    font-size:44px;
+}
+
+.tagline{
+    font-size:28px;
+}
+
+.form-title{
+    font-size:28px;
+}
+
+.left,
+.right{
+    padding:30px 20px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+<div class="blob blob3"></div>
+
+<div class="container">
+
+<div class="card">
+
+    <!-- LEFT SIDE -->
+
+    <div class="left" data-aos="fade-right">
+
+        <div class="logo">SLMS</div>
+
+        <div class="tagline">
+            Manage Staff Leave
+            <br>
+            Beautifully.
+        </div>
+
+        <div class="description">
+            Create your account and access a modern leave management
+            platform designed to streamline approvals, staff requests,
+            and attendance workflows.
+        </div>
+
+        <div class="stats">
+
+            <div class="stat" data-aos="zoom-in" data-aos-delay="100">
+                <h3>100+</h3>
+                <p>Employees</p>
+            </div>
+
+            <div class="stat" data-aos="zoom-in" data-aos-delay="200">
+                <h3>500+</h3>
+                <p>Requests</p>
+            </div>
+
+            <div class="stat" data-aos="zoom-in" data-aos-delay="300">
+                <h3>99%</h3>
+                <p>Accuracy</p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- RIGHT SIDE -->
+
+    <div class="right" data-aos="fade-left">
+
+        <div class="form-box">
+
+            <div class="form-title">
+                Create Account
+            </div>
+
+            <div class="form-subtitle">
+                Register to continue to SLMS
+            </div>
+
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <div>{{ message }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <div class="input-group">
+                    <label>Username</label>
+                    <input type="text" name="username" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Email</label>
+                    <input type="email" name="email" required>
+                </div>
+
+                <div class="input-group">
+
+                    <label>Password</label>
+
+                    <div class="password-box">
+
+                        <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        required
+                        onkeyup="checkStrength()">
+
+                        <i class="fa-solid fa-eye"
+                        onclick="togglePassword('password',this)">
+                        </i>
+
+                    </div>
+
+                    <div class="strength">
+                        <span id="strengthBar"></span>
+                    </div>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label>Confirm Password</label>
+
+                    <div class="password-box">
+
+                        <input
+                        type="password"
+                        id="confirm_password"
+                        name="confirm_password"
+                        required>
+
+                        <i class="fa-solid fa-eye"
+                        onclick="togglePassword('confirm_password',this)">
+                        </i>
+
+                    </div>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label>Role</label>
+
+                    <select name="role" required>
+                        <option value="">Select Role</option>
+                        <option value="admin">Admin</option>
+                        <option value="staff">Staff</option>
+                    </select>
+
+                </div>
+
+                <button type="submit">
+                    Create Account
+                </button>
+
+                <div class="login-link">
+                    Already have an account?
+                    <a href="{% url 'login' %}">
+                        Login Here
+                    </a>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+<!-- AOS -->
+
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+<script>
+
+AOS.init({
+    duration:1200,
+    once:false
+});
+
+function togglePassword(id, icon){
+
+    const input =
+    document.getElementById(id);
+
+    if(input.type==="password"){
+        input.type="text";
+        icon.classList.replace("fa-eye","fa-eye-slash");
+    }
+    else{
+        input.type="password";
+        icon.classList.replace("fa-eye-slash","fa-eye");
+    }
+}
+
+function checkStrength(){
+
+    const password =
+    document.getElementById("password").value;
+
+    const bar =
+    document.getElementById("strengthBar");
+
+    let strength = 0;
+
+    if(password.length > 5) strength += 25;
+    if(/[A-Z]/.test(password)) strength += 25;
+    if(/[0-9]/.test(password)) strength += 25;
+    if(/[^A-Za-z0-9]/.test(password)) strength += 25;
+
+    bar.style.width = strength + "%";
+
+    if(strength <= 25){
+        bar.style.background = "#ff3b30";
+    }
+    else if(strength <= 50){
+        bar.style.background = "#ff9500";
+    }
+    else if(strength <= 75){
+        bar.style.background = "#34c759";
+    }
+    else{
+        bar.style.background = "#0071e3";
+    }
+}
+
+</script>
+
+</body>
+</html>

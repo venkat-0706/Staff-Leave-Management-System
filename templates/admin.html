@@ -1,0 +1,443 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin Dashboard | SLMS</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#f4f7ff;
+    min-height:100vh;
+    display:flex;
+}
+
+/* Sidebar */
+
+.sidebar{
+    width:280px;
+    background:linear-gradient(180deg,#4f46e5,#6d28d9);
+    color:white;
+    padding:30px 20px;
+    position:fixed;
+    height:100vh;
+    box-shadow:0 10px 30px rgba(0,0,0,.2);
+}
+
+.logo{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.logo h2{
+    font-size:32px;
+    font-weight:800;
+}
+
+.logo p{
+    font-size:13px;
+    opacity:.8;
+}
+
+.menu{
+    margin-top:20px;
+}
+
+.menu a{
+    display:flex;
+    align-items:center;
+    gap:15px;
+
+    text-decoration:none;
+    color:white;
+
+    padding:15px 18px;
+    border-radius:12px;
+
+    margin-bottom:12px;
+
+    transition:.4s;
+}
+
+.menu a:hover{
+    background:rgba(255,255,255,.15);
+    transform:translateX(8px);
+}
+
+.menu i{
+    font-size:18px;
+}
+
+/* Main Content */
+
+.main{
+    margin-left:280px;
+    width:100%;
+    padding:40px;
+}
+
+/* Header */
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+
+    margin-bottom:35px;
+}
+
+.header-text h1{
+    font-size:34px;
+    color:#222;
+}
+
+.header-text p{
+    color:#666;
+    margin-top:5px;
+}
+
+.admin-box{
+    background:white;
+    padding:12px 20px;
+    border-radius:15px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+.admin-box i{
+    color:#4f46e5;
+    margin-right:8px;
+}
+
+/* Statistics */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+
+    margin-bottom:35px;
+}
+
+.stat-card{
+    background:white;
+    padding:25px;
+    border-radius:20px;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+
+    transition:.4s;
+}
+
+.stat-card:hover{
+    transform:translateY(-10px);
+
+    box-shadow:
+    0 15px 35px rgba(79,70,229,.25);
+}
+
+.stat-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.stat-top i{
+    font-size:35px;
+    color:#4f46e5;
+}
+
+.stat-card h2{
+    font-size:40px;
+    margin-top:10px;
+    color:#222;
+}
+
+.stat-card p{
+    color:#777;
+}
+
+/* Dashboard Cards */
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:25px;
+}
+
+.card{
+    background:white;
+    border-radius:20px;
+    padding:30px;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+
+    transition:.4s;
+}
+
+.card:hover{
+    transform:translateY(-10px);
+
+    box-shadow:
+    0 15px 35px rgba(79,70,229,.20);
+}
+
+.card i{
+    font-size:40px;
+    color:#4f46e5;
+    margin-bottom:15px;
+}
+
+.card h3{
+    color:#222;
+    margin-bottom:10px;
+}
+
+.card p{
+    color:#666;
+    line-height:1.7;
+    margin-bottom:20px;
+}
+
+.btn{
+    text-decoration:none;
+    display:inline-block;
+
+    padding:12px 25px;
+
+    background:#4f46e5;
+    color:white;
+
+    border-radius:10px;
+    transition:.3s;
+}
+
+.btn:hover{
+    background:#372fc9;
+}
+
+/* Responsive */
+
+@media(max-width:900px){
+
+    .sidebar{
+        width:80px;
+    }
+
+    .logo h2,
+    .logo p,
+    .menu span{
+        display:none;
+    }
+
+    .main{
+        margin-left:80px;
+    }
+
+    .menu a{
+        justify-content:center;
+    }
+}
+
+@media(max-width:768px){
+
+    .main{
+        padding:20px;
+    }
+
+    .header{
+        gap:15px;
+    }
+
+    .header-text h1{
+        font-size:26px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- Sidebar -->
+
+<div class="sidebar">
+
+    <div class="logo">
+        <h2>SLMS</h2>
+        <p>Admin Panel</p>
+    </div>
+
+    <div class="menu">
+
+        <a href="#">
+            <i class="fas fa-house"></i>
+            <span>Dashboard</span>
+        </a>
+
+        <a href="{% url 'leave_request' %}">
+            <i class="fas fa-file-signature"></i>
+            <span>Leave Requests</span>
+        </a>
+
+        <a href="{% url 'manage_staff' %}">
+            <i class="fas fa-users"></i>
+            <span>Manage Staff</span>
+        </a>
+
+        <a href="#">
+            <i class="fas fa-chart-column"></i>
+            <span>Reports</span>
+        </a>
+
+        <a href="{% url 'logout' %}">
+            <i class="fas fa-right-from-bracket"></i>
+            <span>Logout</span>
+        </a>
+
+    </div>
+
+</div>
+
+<!-- Main Content -->
+
+<div class="main">
+
+    <div class="header" data-aos="fade-down">
+
+        <div class="header-text">
+            <h1>Welcome Admin 👋</h1>
+            <p>Manage leave requests and staff activities.</p>
+        </div>
+
+        <div class="admin-box">
+            <i class="fas fa-user-shield"></i>
+            {{ user.username }}
+        </div>
+
+    </div>
+
+    <!-- Statistics -->
+
+    <div class="stats">
+
+    <div class="stat-card" data-aos="zoom-in">
+        <div class="stat-top">
+            <h4>Total Requests</h4>
+            <i class="fas fa-file-circle-check"></i>
+        </div>
+        <h2>{{ total_leaves }}</h2>
+        <p>All leave requests</p>
+    </div>
+
+    <div class="stat-card" data-aos="zoom-in" data-aos-delay="100">
+        <div class="stat-top">
+            <h4>Pending</h4>
+            <i class="fas fa-clock"></i>
+        </div>
+        <h2>{{ pending_leaves }}</h2>
+        <p>Awaiting approval</p>
+    </div>
+
+    <div class="stat-card" data-aos="zoom-in" data-aos-delay="200">
+        <div class="stat-top">
+            <h4>Approved</h4>
+            <i class="fas fa-circle-check"></i>
+        </div>
+        <h2>{{ approved_leaves }}</h2>
+        <p>Approved leave requests</p>
+    </div>
+
+    <div class="stat-card" data-aos="zoom-in" data-aos-delay="300">
+        <div class="stat-top">
+            <h4>Rejected</h4>
+            <i class="fas fa-circle-xmark"></i>
+        </div>
+        <h2>{{ rejected_leaves }}</h2>
+        <p>Rejected leave requests</p>
+    </div>
+
+    <div class="stat-card" data-aos="zoom-in" data-aos-delay="400">
+        <div class="stat-top">
+            <h4>Staff Users</h4>
+            <i class="fas fa-users"></i>
+        </div>
+        <h2>{{ total_staff }}</h2>
+        <p>Registered staff</p>
+    </div>
+
+</div>
+    <!-- Action Cards -->
+
+    <div class="cards">
+
+        <div class="card" data-aos="fade-up">
+            <i class="fas fa-file-signature"></i>
+            <h3>Leave Requests</h3>
+            <p>
+                Review, approve, and reject leave applications submitted by staff.
+            </p>
+
+            <a href="{% url 'leave_request' %}" class="btn">
+                Open Requests
+            </a>
+        </div>
+
+        <div class="card" data-aos="fade-up" data-aos-delay="100">
+            <i class="fas fa-users"></i>
+            <h3>Staff Management</h3>
+            <p>
+                View and manage all registered staff members in the system.
+            </p>
+
+            <a href="{% url 'manage_staff' %}" class="btn">
+                Manage Staff
+            </a>
+        </div>
+
+        <div class="card" data-aos="fade-up" data-aos-delay="200">
+            <i class="fas fa-chart-pie"></i>
+            <h3>Reports & Analytics</h3>
+            <p>
+                Analyze leave statistics and generate management reports.
+            </p>
+
+            <a href="{% url 'reports' %}" class="btn">
+                View Reports
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+<script>
+AOS.init({
+    duration:1000,
+    once:false
+});
+</script>
+
+</body>
+</html>
+

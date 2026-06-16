@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports</title>
+</head>
+<body>
+    <center>
+        <h1>Leave Reports</h1>
+        <table border="2px">
+            <tr>
+                <th>Staff</th>
+                <th>Email</th>
+                <th>Total Leaves</th>
+                <th>Approved Leaves</th>
+                <th>Rejected Leaves</th>
+                <th>Pending Leaves</th>
+            </tr>
+            <tr>
+                {% for i in reports %}
+                <td>{{i. usernmae}}</td>
+                <td>{{i.email}}</td>
+                <td>{{i.total_leaves}}</td>
+                <td>{{i.approved_leaves}}</td>
+                <td>{{i.rejected_leaves}}</td>
+                <td>{{i.pending_leaves}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <a href="{% url 'admin_dashboard' %}">Back to Dashboard</a>
+    </center>
+</body>
+</html>
