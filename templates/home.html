@@ -1,476 +1,119 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SLMS | Staff Leave Management System</title>
 
-<title>SLMS | Staff Leave Management System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-<!-- Google Font -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
 
-<!-- AOS -->
-<link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-<!-- Font Awesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-<style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
-}
-
-body{
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:linear-gradient(135deg,#eef4ff,#f7f9fc);
-    overflow-x:hidden;
-    position:relative;
-}
-
-/* Floating Background */
-
-.circle{
-    position:absolute;
-    border-radius:50%;
-    filter:blur(60px);
-    opacity:.5;
-    animation:float 8s ease-in-out infinite;
-}
-
-.circle:nth-child(1){
-    width:250px;
-    height:250px;
-    background:#4f8cff;
-    top:-80px;
-    left:-80px;
-}
-
-.circle:nth-child(2){
-    width:300px;
-    height:300px;
-    background:#8b5cf6;
-    bottom:-120px;
-    right:-120px;
-}
-
-.circle:nth-child(3){
-    width:180px;
-    height:180px;
-    background:#60a5fa;
-    top:15%;
-    right:10%;
-}
-
-@keyframes float{
-    0%,100%{
-        transform:translateY(0px);
-    }
-    50%{
-        transform:translateY(-25px);
-    }
-}
-
-/* Main Container */
-
-.container{
-    width:95%;
-    max-width:1300px;
-    z-index:10;
-}
-
-/* Card */
-
-.home-card{
-    background:white;
-    border-radius:30px;
-    overflow:hidden;
-
-    box-shadow:
-    0 20px 60px rgba(0,0,0,.08);
-
-    display:grid;
-    grid-template-columns:1fr 1fr;
-}
-
-/* Left Side */
-
-.left{
-    padding:80px 70px;
-    background:#f8fafc;
-}
-
-.logo{
-    font-size:70px;
-    font-weight:800;
-    color:#111827;
-    margin-bottom:15px;
-}
-
-.heading{
-    font-size:30px;
-    font-weight:700;
-    color:#1f2937;
-    line-height:1.3;
-    margin-bottom:25px;
-}
-
-.description{
-    color:#6b7280;
-    font-size:18px;
-    line-height:1.9;
-    margin-bottom:45px;
-}
-
-/* Stats */
-
-.stats{
-    display:flex;
-    gap:20px;
-    flex-wrap:wrap;
-}
-
-.stat-card{
-    width:140px;
-    padding:22px;
-    background:white;
-    border-radius:20px;
-
-    box-shadow:
-    0 10px 30px rgba(0,0,0,.06);
-
-    transition:.3s;
-}
-
-.stat-card:hover{
-    transform:translateY(-8px);
-}
-
-.stat-card h3{
-    color:#1674e0;
-    font-size:38px;
-    margin-bottom:5px;
-}
-
-.stat-card p{
-    color:#6b7280;
-    font-size:14px;
-}
-
-/* Right Side */
-
-.right{
-    padding:80px 70px;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-}
-
-.badge{
-    display:inline-block;
-    width:max-content;
-
-    background:#e8f1ff;
-    color:#1674e0;
-
-    padding:10px 18px;
-
-    border-radius:50px;
-
-    font-size:14px;
-    font-weight:600;
-
-    margin-bottom:20px;
-}
-
-.right h1{
-    font-size:52px;
-    color:#111827;
-    margin-bottom:15px;
-    line-height:1.2;
-}
-
-.right p{
-    color:#6b7280;
-    line-height:1.8;
-    margin-bottom:35px;
-}
-
-/* Feature Cards */
-
-.features{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:18px;
-    margin-bottom:35px;
-}
-
-.feature{
-    background:#f8fafc;
-    padding:18px;
-    border-radius:16px;
-    transition:.3s;
-}
-
-.feature:hover{
-    transform:translateY(-5px);
-    box-shadow:0 10px 20px rgba(0,0,0,.08);
-}
-
-.feature i{
-    color:#1674e0;
-    font-size:22px;
-    margin-bottom:10px;
-}
-
-.feature h4{
-    color:#111827;
-    margin-bottom:6px;
-}
-
-.feature p{
-    font-size:13px;
-    margin:0;
-}
-
-/* Buttons */
-
-.buttons{
-    display:flex;
-    gap:15px;
-    flex-wrap:wrap;
-}
-
-.btn{
-    text-decoration:none;
-    padding:15px 30px;
-    border-radius:14px;
-    font-weight:600;
-    transition:.3s;
-}
-
-.login-btn{
-    background:#1674e0;
-    color:white;
-}
-
-.login-btn:hover{
-    background:#0f5dc4;
-    transform:translateY(-3px);
-}
-
-.register-btn{
-    border:2px solid #1674e0;
-    color:#1674e0;
-}
-
-.register-btn:hover{
-    background:#1674e0;
-    color:white;
-    transform:translateY(-3px);
-}
-
-/* Footer */
-
-.footer{
-    margin-top:35px;
-    color:#9ca3af;
-    font-size:14px;
-}
-
-/* Responsive */
-
-@media(max-width:1000px){
-
-.home-card{
-    grid-template-columns:1fr;
-}
-
-.left,
-.right{
-    padding:50px 35px;
-}
-
-.logo{
-    font-size:55px;
-}
-
-.right h1{
-    font-size:38px;
-}
-
-}
-
-@media(max-width:600px){
-
-.stats{
-    justify-content:center;
-}
-
-.stat-card{
-    width:100%;
-}
-
-.features{
-    grid-template-columns:1fr;
-}
-
-.buttons{
-    flex-direction:column;
-}
-
-.btn{
-    text-align:center;
-}
-
-.logo{
-    font-size:45px;
-}
-
-.heading{
-    font-size:24px;
-}
-
-.right h1{
-    font-size:30px;
-}
-
-}
-
-</style>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
 </head>
-
 <body>
 
-<div class="circle"></div>
-<div class="circle"></div>
-<div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
 
-<div class="container">
+    <div class="container">
+        <div class="home-card">
 
-<div class="home-card">
+            <div class="left" data-aos="fade-right">
+                <div class="logo">
+                    SLMS
+                </div>
 
-<!-- LEFT SIDE -->
+                <div class="heading">
+                    Staff Leave Management <br> System
+                </div>
 
-<div class="left" data-aos="fade-right">
+                <div class="description">
+                    A powerful leave management platform designed to streamline
+                    leave requests, approvals, staff tracking, and administrative
+                    workflows within your organization.
+                </div>
 
-<div class="logo">
-SLMS
-</div>
+                <div class="stats">
+                    <div class="stat-card" data-aos="zoom-in" data-aos-delay="100">
+                        <h3>100+</h3>
+                        <p>Employees</p>
+                    </div>
 
-<div class="heading">Staff Leave Management <br> System</div>
+                    <div class="stat-card" data-aos="zoom-in" data-aos-delay="200">
+                        <h3>500+</h3>
+                        <p>Requests</p>
+                    </div>
 
-<div class="description">
-A powerful leave management platform designed to streamline
-leave requests, approvals, staff tracking, and administrative
-workflows within your organization.
-</div>
+                    <div class="stat-card" data-aos="zoom-in" data-aos-delay="300">
+                        <h3>99%</h3>
+                        <p>Accuracy</p>
+                    </div>
+                </div>
+            </div>
 
-<div class="stats">
+            <div class="right" data-aos="fade-left">
+                <div class="badge">
+                    🚀 Dhee Coding Lab Project
+                </div>
 
-<div class="stat-card" data-aos="zoom-in" data-aos-delay="100">
-<h3>100+</h3>
-<p>Employees</p>
-</div>
+                <h1>Welcome to SLMS</h1>
 
-<div class="stat-card" data-aos="zoom-in" data-aos-delay="200">
-<h3>500+</h3>
-<p>Requests</p>
-</div>
+                <p>
+                    Simplify leave approvals, employee leave tracking,
+                    and administration with a secure role-based leave
+                    management system built using Django.
+                </p>
 
-<div class="stat-card" data-aos="zoom-in" data-aos-delay="300">
-<h3>99%</h3>
-<p>Accuracy</p>
-</div>
+                <div class="features">
+                    <div class="feature">
+                        <i class="fas fa-user-shield"></i>
+                        <h4>Role Based Access</h4>
+                        <p>Separate Admin and Staff dashboards.</p>
+                    </div>
 
-</div>
+                    <div class="feature">
+                        <i class="fas fa-file-signature"></i>
+                        <h4>Leave Requests</h4>
+                        <p>Easy leave application and approval.</p>
+                    </div>
 
-</div>
+                    <div class="feature">
+                        <i class="fas fa-chart-line"></i>
+                        <h4>Analytics</h4>
+                        <p>Track employee leave records.</p>
+                    </div>
 
-<!-- RIGHT SIDE -->
+                    <div class="feature">
+                        <i class="fas fa-lock"></i>
+                        <h4>Secure</h4>
+                        <p>Protected authentication system.</p>
+                    </div>
+                </div>
 
-<div class="right" data-aos="fade-left">
+                <div class="buttons">
+                    <a href="{% url 'login' %}" class="btn login-btn">
+                        <i class="fas fa-right-to-bracket"></i> Login
+                    </a>
+                    <a href="{% url 'register' %}" class="btn register-btn">
+                        <i class="fas fa-user-plus"></i> Register
+                    </a>
+                </div>
 
-<div class="badge">
-🚀 Dhee Coding Lab Project
-</div>
+                <div class="footer">
+                    © 2026 Dhee Coding Lab (DCL) | All Rights Reserved
+                </div>
+            </div>
 
-<h1>
-Welcome to SLMS
-</h1>
+        </div>
+    </div>
 
-<p>
-Simplify leave approvals, employee leave tracking,
-and administration with a secure role-based leave
-management system built using Django.
-</p>
-
-<div class="features">
-
-<div class="feature">
-<i class="fas fa-user-shield"></i>
-<h4>Role Based Access</h4>
-<p>Separate Admin and Staff dashboards.</p>
-</div>
-
-<div class="feature">
-<i class="fas fa-file-signature"></i>
-<h4>Leave Requests</h4>
-<p>Easy leave application and approval.</p>
-</div>
-
-<div class="feature">
-<i class="fas fa-chart-line"></i>
-<h4>Analytics</h4>
-<p>Track employee leave records.</p>
-</div>
-
-<div class="feature">
-<i class="fas fa-lock"></i>
-<h4>Secure</h4>
-<p>Protected authentication system.</p>
-</div>
-
-</div>
-
-<div class="buttons">
-
-<a href="{% url 'login' %}" class="btn login-btn">
-<i class="fas fa-right-to-bracket"></i>
-Login
-</a>
-
-<a href="{% url 'register' %}" class="btn register-btn">
-<i class="fas fa-user-plus"></i>
-Register
-</a>
-
-</div>
-
-<div class="footer">
-© 2026 Dhee Coding Lab (DCL) | All Rights Reserved
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-
-<script>
-AOS.init({
-    duration:1200,
-    once:false
-});
-</script>
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script src="{% static 'js/home.js' %}"></script>
 
 </body>
 </html>

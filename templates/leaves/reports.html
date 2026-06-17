@@ -1,182 +1,22 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leave Reports | SLMS</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<title>Leave Reports | SLMS</title>
 
-    <style>
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family:'Poppins',sans-serif;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-        body{
-            background:#f4f6f9;
-            padding:40px;
-        }
+<link rel="stylesheet"
+href="{% static 'css/reports.css' %}">
 
-        .container{
-            width:95%;
-            max-width:1400px;
-            margin:auto;
-        }
-
-        .header{
-            text-align:center;
-            margin-bottom:25px;
-        }
-
-        .header h1{
-            color:#222;
-            font-size:36px;
-            margin-bottom:10px;
-        }
-
-        .header p{
-            color:#666;
-        }
-
-        /* Search Bar */
-        .search-container{
-            display:flex;
-            justify-content:flex-end;
-            margin-bottom:20px;
-        }
-
-        .search-container input{
-            width:350px;
-            max-width:100%;
-            padding:12px 18px;
-            border:1px solid #ddd;
-            border-radius:8px;
-            font-size:15px;
-            outline:none;
-            transition:0.3s;
-        }
-
-        .search-container input:focus{
-            border-color:#0d6efd;
-            box-shadow:0 0 10px rgba(13,110,253,0.2);
-        }
-
-        .table-wrapper{
-            background:#fff;
-            border-radius:12px;
-            overflow:hidden;
-            box-shadow:0 4px 20px rgba(0,0,0,0.08);
-        }
-
-        table{
-            width:100%;
-            border-collapse:collapse;
-        }
-
-        thead{
-            background:#0d6efd;
-            color:white;
-        }
-
-        thead th{
-            padding:18px;
-            text-align:center;
-            font-size:15px;
-            font-weight:600;
-        }
-
-        tbody td{
-            padding:16px;
-            text-align:center;
-            border-bottom:1px solid #e5e5e5;
-            color:#333;
-        }
-
-        tbody tr:nth-child(even){
-            background:#fafafa;
-        }
-
-        tbody tr:hover{
-            background:#eef5ff;
-            transition:0.3s;
-        }
-
-        .approved{
-            color:green;
-            font-weight:600;
-        }
-
-        .rejected{
-            color:red;
-            font-weight:600;
-        }
-
-        .pending{
-            color:#ff9800;
-            font-weight:600;
-        }
-
-        .approved::before{
-            content:"✔ ";
-        }
-
-        .rejected::before{
-            content:"✖ ";
-        }
-
-        .pending::before{
-            content:"⏳ ";
-        }
-
-        .dashboard-btn{
-            display:inline-block;
-            margin-top:25px;
-            padding:12px 25px;
-            background:#0d6efd;
-            color:white;
-            text-decoration:none;
-            border-radius:8px;
-            font-weight:600;
-            transition:0.3s;
-        }
-
-        .dashboard-btn:hover{
-            background:#0b5ed7;
-            transform:translateY(-2px);
-        }
-
-        @media(max-width:768px){
-
-            body{
-                padding:15px;
-            }
-
-            .table-wrapper{
-                overflow-x:auto;
-            }
-
-            table{
-                min-width:900px;
-            }
-
-            .header h1{
-                font-size:28px;
-            }
-
-            .search-container{
-                justify-content:center;
-            }
-
-            .search-container input{
-                width:100%;
-            }
-        }
-    </style>
 </head>
 <body>
+
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
 
 <div class="container">
 
@@ -186,18 +26,22 @@
     </div>
 
     <!-- Search Field -->
+
     <div class="search-container">
+
         <input
             type="text"
             id="searchInput"
-            placeholder="🔍 Search by Staff Name or Email..."
-        >
+            placeholder="🔍 Search by Staff Name or Email...">
+
     </div>
 
     <div class="table-wrapper">
 
         <table id="reportTable">
+
             <thead>
+
                 <tr>
                     <th>Staff Name</th>
                     <th>Email</th>
@@ -206,12 +50,15 @@
                     <th>Approved Leaves</th>
                     <th>Rejected Leaves</th>
                 </tr>
+
             </thead>
 
             <tbody>
 
                 {% for i in result %}
+
                 <tr>
+
                     <td>{{ i.username }}</td>
                     <td>{{ i.email }}</td>
                     <td>{{ i.total_leaves }}</td>
@@ -233,50 +80,41 @@
                             {{ i.rejected_leaves }}
                         </span>
                     </td>
+
                 </tr>
+
                 {% empty %}
+
                 <tr>
+
                     <td colspan="6">
                         No leave reports available.
                     </td>
+
                 </tr>
+
                 {% endfor %}
 
             </tbody>
+
         </table>
 
     </div>
 
     <center>
-        <a href="{% url 'admin_dashboard' %}" class="dashboard-btn">
+
+        <a href="{% url 'admin_dashboard' %}"
+           class="dashboard-btn">
+
             ← Back to Dashboard
+
         </a>
+
     </center>
 
 </div>
 
-<script>
-document.getElementById("searchInput").addEventListener("keyup", function() {
-
-    let filter = this.value.toLowerCase();
-    let rows = document.querySelectorAll("#reportTable tbody tr");
-
-    rows.forEach(function(row) {
-
-        let name = row.cells[0].textContent.toLowerCase();
-        let email = row.cells[1].textContent.toLowerCase();
-
-        if(name.includes(filter) || email.includes(filter)){
-            row.style.display = "";
-        }
-        else{
-            row.style.display = "none";
-        }
-
-    });
-
-});
-</script>
+<script src="{% static 'js/reports.js' %}"></script>
 
 </body>
 </html>

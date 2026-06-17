@@ -1,408 +1,106 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Staff | SLMS</title>
 
-<title>Add Staff | SLMS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-<style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
-}
-
-body{
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    overflow:hidden;
-
-    background:linear-gradient(
-        135deg,
-        #e0e7ff,
-        #dbeafe,
-        #ede9fe
-    );
-}
-
-/* Floating Shapes */
-
-.circle{
-    position:absolute;
-    border-radius:50%;
-    background:rgba(255,255,255,.5);
-    backdrop-filter:blur(20px);
-    animation:float 8s infinite ease-in-out;
-}
-
-.circle:nth-child(1){
-    width:180px;
-    height:180px;
-    left:5%;
-    top:10%;
-}
-
-.circle:nth-child(2){
-    width:250px;
-    height:250px;
-    right:8%;
-    bottom:8%;
-}
-
-.circle:nth-child(3){
-    width:120px;
-    height:120px;
-    right:20%;
-    top:15%;
-}
-
-@keyframes float{
-    0%,100%{
-        transform:translateY(0);
-    }
-    50%{
-        transform:translateY(-30px);
-    }
-}
-
-.container{
-    width:100%;
-    max-width:1100px;
-    padding:20px;
-    z-index:10;
-}
-
-.card{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-
-    background:rgba(255,255,255,.85);
-
-    border-radius:30px;
-
-    overflow:hidden;
-
-    box-shadow:
-    0 15px 40px rgba(0,0,0,.1);
-}
-
-/* Left Side */
-
-.left{
-    padding:60px;
-    background:#f8fafc;
-}
-
-.logo{
-    font-size:65px;
-    font-weight:700;
-    color:#0f172a;
-    margin-bottom:20px;
-}
-
-.left h2{
-    font-size:42px;
-    color:#0f172a;
-    margin-bottom:20px;
-}
-
-.left p{
-    color:#64748b;
-    line-height:1.8;
-}
-
-.stats{
-    display:flex;
-    gap:15px;
-    margin-top:40px;
-    flex-wrap:wrap;
-}
-
-.stat-box{
-    background:white;
-    padding:20px;
-    border-radius:15px;
-    min-width:120px;
-
-    box-shadow:
-    0 5px 15px rgba(0,0,0,.05);
-}
-
-.stat-box h3{
-    color:#1d4ed8;
-    font-size:32px;
-}
-
-.stat-box p{
-    font-size:14px;
-}
-
-/* Right Side */
-
-.right{
-    padding:60px;
-}
-
-.right h1{
-    font-size:48px;
-    color:#0f172a;
-    margin-bottom:10px;
-}
-
-.right span{
-    color:#64748b;
-}
-
-.form-group{
-    margin-top:20px;
-}
-
-.form-group label{
-    display:block;
-    margin-bottom:8px;
-    color:#334155;
-    font-weight:500;
-}
-
-.form-group input{
-    width:100%;
-    padding:15px;
-
-    border:1px solid #cbd5e1;
-
-    border-radius:15px;
-
-    outline:none;
-
-    background:#f1f5f9;
-
-    font-size:15px;
-}
-
-.form-group input:focus{
-    border-color:#2563eb;
-}
-
-.password-box{
-    position:relative;
-}
-
-.password-box i{
-    position:absolute;
-    right:15px;
-    top:18px;
-    cursor:pointer;
-    color:#64748b;
-}
-
-button{
-    width:100%;
-
-    margin-top:25px;
-
-    padding:15px;
-
-    border:none;
-
-    border-radius:15px;
-
-    background:#1d72d8;
-
-    color:white;
-
-    font-size:18px;
-
-    font-weight:600;
-
-    cursor:pointer;
-
-    transition:.3s;
-}
-
-button:hover{
-    background:#155ec0;
-}
-
-.back-link{
-    text-align:center;
-    margin-top:20px;
-}
-
-.back-link a{
-    text-decoration:none;
-    color:#2563eb;
-    font-weight:600;
-}
-
-@media(max-width:900px){
-
-.card{
-    grid-template-columns:1fr;
-}
-
-.left{
-    display:none;
-}
-
-.right{
-    padding:35px;
-}
-
-.right h1{
-    font-size:35px;
-}
-
-}
-
-</style>
+    <link rel="stylesheet" href="{% static 'css/add_staff.css' %}">
 </head>
 <body>
 
-<div class="circle"></div>
-<div class="circle"></div>
-<div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
 
-<div class="container">
+    <div class="container">
+        <div class="card">
 
-<div class="card">
+            <div class="left">
+                <div class="logo">SLMS</div>
 
-<div class="left">
+                <h2>Add New Staff</h2>
 
-<div class="logo">SLMS</div>
+                <p>
+                    Create staff accounts and manage employee access
+                    within the Staff Leave Management System.
+                </p>
 
-<h2>Add New Staff</h2>
+                <div class="stats">
+                    <div class="stat-box">
+                        <h3>100+</h3>
+                        <p>Employees</p>
+                    </div>
 
-<p>
-Create staff accounts and manage employee access
-within the Staff Leave Management System.
-</p>
+                    <div class="stat-box">
+                        <h3>500+</h3>
+                        <p>Requests</p>
+                    </div>
 
-<div class="stats">
+                    <div class="stat-box">
+                        <h3>99%</h3>
+                        <p>Accuracy</p>
+                    </div>
+                </div>
+            </div>
 
-<div class="stat-box">
-<h3>100+</h3>
-<p>Employees</p>
-</div>
+            <div class="right">
+                <h1>Add Staff</h1>
+                <span>Create a new staff account</span>
 
-<div class="stat-box">
-<h3>500+</h3>
-<p>Requests</p>
-</div>
+                <form method="POST">
+                    {% csrf_token %}
 
-<div class="stat-box">
-<h3>99%</h3>
-<p>Accuracy</p>
-</div>
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" name="username" placeholder="Enter Username" required>
+                    </div>
 
-</div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" name="email" placeholder="Enter Email Address" required>
+                    </div>
 
-</div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <div class="password-box">
+                            <input type="password" id="password" name="password" placeholder="Enter Password" required>
+                            <i class="fa-solid fa-eye" onclick="togglePassword()"></i>
+                        </div>
+                    </div>
 
-<div class="right">
+                    <button type="submit">Add Staff</button>
 
-<h1>Add Staff</h1>
-<span>Create a new staff account</span>
+                    <div class="back-link">
+                        <a href="{% url 'manage_staff' %}">← Back to Manage Staff</a>
+                    </div>
+                </form>
+            </div>
 
-<form method="POST">
+        </div>
+    </div>
 
-{% csrf_token %}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<div class="form-group">
-<label>Username</label>
-<input
-type="text"
-name="username"
-placeholder="Enter Username"
-required>
-</div>
+    {% if messages %}
+        {% for message in messages %}
+            <script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: '{{ message }}',
+                    confirmButtonColor: '#1d72d8'
+                });
+            </script>
+        {% endfor %}
+    {% endif %}
 
-<div class="form-group">
-<label>Email</label>
-<input
-type="email"
-name="email"
-placeholder="Enter Email Address"
-required>
-</div>
-
-<div class="form-group">
-<label>Password</label>
-
-<div class="password-box">
-
-<input
-type="password"
-id="password"
-name="password"
-placeholder="Enter Password"
-required>
-
-<i class="fa-solid fa-eye"
-onclick="togglePassword()"></i>
-
-</div>
-
-</div>
-
-<button type="submit">
-Add Staff
-</button>
-
-<div class="back-link">
-<a href="{% url 'manage_staff' %}">
-← Back to Manage Staff
-</a>
-</div>
-
-</form>
-
-</div>
-
-</div>
-
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-{% if messages %}
-    {% for message in messages %}
-        <script>
-        Swal.fire({
-            icon: 'success',
-            title: 'Success',
-            text: '{{ message }}',
-            confirmButtonColor:'#1d72d8'
-        });
-        </script>
-    {% endfor %}
-{% endif %}
-
-<script>
-
-function togglePassword(){
-
-    let password =
-    document.getElementById("password");
-
-    if(password.type==="password"){
-        password.type="text";
-    }
-    else{
-        password.type="password";
-    }
-}
-
-</script>
+    <script src="{% static 'js/add_staff.js' %}"></script>
 
 </body>
 </html>

@@ -1,140 +1,58 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Staff | SLMS</title>
 
-<title>Edit Staff | SLMS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-}
-
-body{
-min-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-background:linear-gradient(120deg,#dfe9f3,#ffffff,#d8cfff);
-}
-
-.container{
-max-width:1100px;
-width:100%;
-padding:20px;
-}
-
-.card{
-display:grid;
-grid-template-columns:1fr 1fr;
-background:white;
-border-radius:30px;
-overflow:hidden;
-box-shadow:0 25px 60px rgba(0,0,0,.08);
-}
-
-.left{
-padding:60px;
-background:#f8f9fc;
-}
-
-.left h1{
-font-size:60px;
-color:#111827;
-}
-
-.left h2{
-margin-top:15px;
-}
-
-.right{
-padding:60px;
-}
-
-.right h2{
-font-size:45px;
-margin-bottom:10px;
-}
-
-input{
-width:100%;
-padding:15px;
-margin-bottom:20px;
-border:1px solid #d1d5db;
-border-radius:14px;
-}
-
-button{
-width:100%;
-padding:15px;
-background:#1d72d8;
-border:none;
-border-radius:14px;
-color:white;
-font-weight:600;
-}
-
-.back{
-display:block;
-text-align:center;
-margin-top:20px;
-text-decoration:none;
-font-weight:600;
-color:#1d72d8;
-}
-
-</style>
+    <link rel="stylesheet" href="{% static 'css/edit_staff.css' %}">
 </head>
 <body>
 
-<div class="container">
+    <div class="container">
+        <div class="card">
 
-<div class="card">
+            <div class="left">
+                <h1>SLMS</h1>
+                <h2>Edit Staff Details</h2>
+            </div>
 
-<div class="left">
-<h1>SLMS</h1>
-<h2>Edit Staff Details</h2>
-</div>
+            <div class="right">
+                <h2>Edit Staff</h2>
 
-<div class="right">
+                <form method="POST">
+                    {% csrf_token %}
 
-<h2>Edit Staff</h2>
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" name="username" value="{{ staff.username }}" required>
+                    </div>
 
-<form method="POST">
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" name="email" value="{{ staff.email }}" required>
+                    </div>
 
-{% csrf_token %}
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="password" name="password" placeholder="Leave blank to keep current password">
+                    </div>
 
-<input type="text"
-name="username"
-value="{{ staff.username }}"
-required>
+                    <button type="submit">Update Staff</button>
+                </form>
 
-<input type="password"
-name="password"
-placeholder="Leave blank to keep current password">
+                <a href="{% url 'manage_staff' %}" class="back">
+                    Back to Manage Staff
+                </a>
+            </div>
 
-<button type="submit">
-Update Staff
-</button>
+        </div>
+    </div>
 
-</form>
-
-<a href="{% url 'manage_staff' %}" class="back">
-Back to Manage Staff
-</a>
-
-</div>
-
-</div>
-
-</div>
+    <script src="{% static 'js/edit_staff.js' %}"></script>
 
 </body>
 </html>

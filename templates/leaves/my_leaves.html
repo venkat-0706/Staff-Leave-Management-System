@@ -1,167 +1,109 @@
+{% load static %}
+
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Leave History | SLMS</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-<style>
+<link rel="stylesheet"
+href="{% static 'css/leave_history.css' %}">
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
-}
-
-body{
-    min-height:100vh;
-    background:linear-gradient(120deg,#dbeafe,#eff6ff,#e9d5ff);
-    padding:40px;
-}
-
-.container{
-    max-width:1200px;
-    margin:auto;
-}
-
-h1{
-    text-align:center;
-    margin-bottom:30px;
-    color:#111827;
-}
-
-.card{
-    background:white;
-    border-radius:20px;
-    padding:25px;
-    box-shadow:0 15px 40px rgba(0,0,0,.08);
-    overflow-x:auto;
-}
-
-table{
-    width:100%;
-    border-collapse:collapse;
-}
-
-th{
-    background:#2563eb;
-    color:white;
-    padding:15px;
-    text-align:center;
-}
-
-td{
-    padding:15px;
-    text-align:center;
-    border-bottom:1px solid #e5e7eb;
-}
-
-tr:hover{
-    background:#f9fafb;
-}
-
-.pending{
-    color:#f59e0b;
-    font-weight:600;
-}
-
-.approved{
-    color:#16a34a;
-    font-weight:600;
-}
-
-.rejected{
-    color:#dc2626;
-    font-weight:600;
-}
-
-.back-btn{
-    display:inline-block;
-    margin-top:25px;
-    padding:12px 20px;
-    background:#2563eb;
-    color:white;
-    text-decoration:none;
-    border-radius:10px;
-    font-weight:600;
-}
-
-.back-btn:hover{
-    background:#1d4ed8;
-}
-
-.no-data{
-    color:#6b7280;
-    font-weight:600;
-}
-
-</style>
 </head>
 <body>
 
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+
 <div class="container">
 
-    <h1>My Leave History</h1>
+```
+<h1>📋 My Leave History</h1>
 
-    <div class="card">
+<div class="card">
 
-        <table>
+    <table>
 
-            <tr>
-                <th>Username</th>
-                <th>Leave Type</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Reason</th>
-                <th>Status</th>
-            </tr>
+        <tr>
+            <th>Username</th>
+            <th>Leave Type</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Reason</th>
+            <th>Status</th>
+        </tr>
 
-            {% for i in leaves %}
+        {% for i in leaves %}
 
-            <tr>
-                <td>{{ i.username }}</td>
-                <td>{{ i.leave_type }}</td>
-                <td>{{ i.start_date }}</td>
-                <td>{{ i.end_date }}</td>
-                <td>{{ i.reason }}</td>
+        <tr>
 
-                <td>
-                    {% if i.status == 'pending' %}
-                        <span class="pending">⏳ Pending</span>
+            <td>{{ i.username }}</td>
+            <td>{{ i.leave_type }}</td>
+            <td>{{ i.start_date }}</td>
+            <td>{{ i.end_date }}</td>
+            <td>{{ i.reason }}</td>
 
-                    {% elif i.status == 'approved' %}
-                        <span class="approved">✅ Approved</span>
+            <td>
 
-                    {% elif i.status == 'rejected' %}
-                        <span class="rejected">❌ Rejected</span>
-                    {% endif %}
-                </td>
-            </tr>
+                {% if i.status == 'pending' %}
+                <span class="pending">
+                    ⏳ Pending
+                </span>
 
-            {% empty %}
+                {% elif i.status == 'approved' %}
+                <span class="approved">
+                    ✅ Approved
+                </span>
 
-            <tr>
-                <td colspan="6" class="no-data">
-                    No Leave Records Found
-                </td>
-            </tr>
+                {% elif i.status == 'rejected' %}
+                <span class="rejected">
+                    ❌ Rejected
+                </span>
+                {% endif %}
 
-            {% endfor %}
+            </td>
 
-        </table>
+        </tr>
 
-        <center>
-            <a href="{% url 'staff_dashboard' %}" class="back-btn">
-                ← Back to Dashboard
-            </a>
-        </center>
+        {% empty %}
 
-    </div>
+        <tr>
+
+            <td colspan="6"
+                class="no-data">
+
+                No Leave Records Found
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+    <center>
+
+        <a href="{% url 'staff_dashboard' %}"
+           class="back-btn">
+
+            ← Back to Dashboard
+
+        </a>
+
+    </center>
 
 </div>
+```
+
+</div>
+
+<script src="{% static 'js/leave_history.js' %}"></script>
 
 </body>
 </html>
