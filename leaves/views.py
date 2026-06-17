@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User 
 from leaves.models import Leave 
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from datetime import date
 
 
@@ -12,6 +13,7 @@ def home(request):
 
 
 @login_required
+@csrf_exempt
 def apply_leave(request):
     if request.method == 'POST':
         username = request.POST['username']

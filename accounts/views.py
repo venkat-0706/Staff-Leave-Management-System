@@ -44,6 +44,7 @@ def register(request):
         messages.success(request, "Account Created Successfully")
         return redirect('login')
     return render(request, 'register.html')
+
 @csrf_exempt
 def loginview(request):
     if request.method == 'POST':
@@ -112,7 +113,7 @@ def admin_dashboard(request):
 
     return render(request, 'admin.html', ctx)
 
-
+@csrf_exempt
 @login_required
 def staff_dashboard(request):
     total_leaves = Leave.objects.filter(username = request.user).count()
@@ -133,6 +134,7 @@ def logoutview(request):
     logout(request)
     return redirect('login')
     
+@csrf_exempt
 @login_required
 def manage_staff(request):
     if request.user.profile.role != 'admin':
@@ -156,7 +158,9 @@ def manage_staff(request):
     return render(request, 'accounts/manage_staff.html', context)
 
 
+@csrf_exempt
 @login_required
+
 def add_staff(request):
     if request.user.profile.role != 'admin':
         return redirect('staff_dashboard')
@@ -185,7 +189,7 @@ def add_staff(request):
         return redirect('manage_staff')
     return render(request , 'accounts/add_Staff.html')
 
-
+@csrf_exempt
 @login_required
 def edit_staff(request , id):
     if request.user.profile.role != 'admin':
@@ -199,6 +203,7 @@ def edit_staff(request , id):
     return render(request, 'accounts/edit_staff.html' ,{'user': user})
 
 
+@csrf_exempt
 @login_required
 def delete_staff(request, id):
     if request.user.profile.role != 'admin':
