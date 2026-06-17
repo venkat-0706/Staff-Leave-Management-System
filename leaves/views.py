@@ -4,10 +4,13 @@ from django.contrib import messages
 from django.contrib.auth.models import User 
 from leaves.models import Leave 
 from django.contrib.auth.decorators import login_required
+from datetime import date
 
 
 def home(request):
     return render(request, 'staff.html')
+
+
 @login_required
 def apply_leave(request):
     if request.method == 'POST':
@@ -17,6 +20,19 @@ def apply_leave(request):
         start_date = request.POST['start_date']
         end_date = request.POST['end_date']
         reason = request.POST['reason']
+
+        start_date_obj = date.fromisoformat(start_date)
+        end_date_obj = date.fromisoformat(end_date)
+        today = date.today()
+
+        if start_date_obj < today:
+            messages.error(request, "Invalid start date  !, you can not apply the leave for the previous date")
+            return redirect('apply_leave')
+        
+        if end_date_obj < start_date_obj:
+            messages.error(request, "Invalid end Date ! , You cant apply the leave fir the previous date")
+            return redirect('apply_leave')
+ 
         Leave.objects.create(
             username = request.user , 
             leave_type = leave_type ,

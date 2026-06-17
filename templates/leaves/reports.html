@@ -28,7 +28,7 @@
 
         .header{
             text-align:center;
-            margin-bottom:30px;
+            margin-bottom:25px;
         }
 
         .header h1{
@@ -39,6 +39,29 @@
 
         .header p{
             color:#666;
+        }
+
+        /* Search Bar */
+        .search-container{
+            display:flex;
+            justify-content:flex-end;
+            margin-bottom:20px;
+        }
+
+        .search-container input{
+            width:350px;
+            max-width:100%;
+            padding:12px 18px;
+            border:1px solid #ddd;
+            border-radius:8px;
+            font-size:15px;
+            outline:none;
+            transition:0.3s;
+        }
+
+        .search-container input:focus{
+            border-color:#0d6efd;
+            box-shadow:0 0 10px rgba(13,110,253,0.2);
         }
 
         .table-wrapper{
@@ -125,34 +148,6 @@
             transform:translateY(-2px);
         }
 
-        .stats{
-            display:flex;
-            justify-content:center;
-            gap:20px;
-            margin-bottom:25px;
-            flex-wrap:wrap;
-        }
-
-        .card{
-            background:white;
-            padding:20px;
-            border-radius:10px;
-            min-width:220px;
-            text-align:center;
-            box-shadow:0 4px 12px rgba(0,0,0,0.08);
-        }
-
-        .card h3{
-            color:#555;
-            margin-bottom:10px;
-        }
-
-        .card p{
-            font-size:24px;
-            font-weight:bold;
-            color:#0d6efd;
-        }
-
         @media(max-width:768px){
 
             body{
@@ -170,6 +165,14 @@
             .header h1{
                 font-size:28px;
             }
+
+            .search-container{
+                justify-content:center;
+            }
+
+            .search-container input{
+                width:100%;
+            }
         }
     </style>
 </head>
@@ -182,9 +185,18 @@
         <p>Staff Leave Management System</p>
     </div>
 
+    <!-- Search Field -->
+    <div class="search-container">
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="🔍 Search by Staff Name or Email..."
+        >
+    </div>
+
     <div class="table-wrapper">
 
-        <table>
+        <table id="reportTable">
             <thead>
                 <tr>
                     <th>Staff Name</th>
@@ -242,6 +254,29 @@
     </center>
 
 </div>
+
+<script>
+document.getElementById("searchInput").addEventListener("keyup", function() {
+
+    let filter = this.value.toLowerCase();
+    let rows = document.querySelectorAll("#reportTable tbody tr");
+
+    rows.forEach(function(row) {
+
+        let name = row.cells[0].textContent.toLowerCase();
+        let email = row.cells[1].textContent.toLowerCase();
+
+        if(name.includes(filter) || email.includes(filter)){
+            row.style.display = "";
+        }
+        else{
+            row.style.display = "none";
+        }
+
+    });
+
+});
+</script>
 
 </body>
 </html>
