@@ -3,32 +3,245 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reports</title>
+    <title>Leave Reports | SLMS</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins',sans-serif;
+        }
+
+        body{
+            background:#f4f6f9;
+            padding:40px;
+        }
+
+        .container{
+            width:95%;
+            max-width:1400px;
+            margin:auto;
+        }
+
+        .header{
+            text-align:center;
+            margin-bottom:30px;
+        }
+
+        .header h1{
+            color:#222;
+            font-size:36px;
+            margin-bottom:10px;
+        }
+
+        .header p{
+            color:#666;
+        }
+
+        .table-wrapper{
+            background:#fff;
+            border-radius:12px;
+            overflow:hidden;
+            box-shadow:0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+        }
+
+        thead{
+            background:#0d6efd;
+            color:white;
+        }
+
+        thead th{
+            padding:18px;
+            text-align:center;
+            font-size:15px;
+            font-weight:600;
+        }
+
+        tbody td{
+            padding:16px;
+            text-align:center;
+            border-bottom:1px solid #e5e5e5;
+            color:#333;
+        }
+
+        tbody tr:nth-child(even){
+            background:#fafafa;
+        }
+
+        tbody tr:hover{
+            background:#eef5ff;
+            transition:0.3s;
+        }
+
+        .approved{
+            color:green;
+            font-weight:600;
+        }
+
+        .rejected{
+            color:red;
+            font-weight:600;
+        }
+
+        .pending{
+            color:#ff9800;
+            font-weight:600;
+        }
+
+        .approved::before{
+            content:"✔ ";
+        }
+
+        .rejected::before{
+            content:"✖ ";
+        }
+
+        .pending::before{
+            content:"⏳ ";
+        }
+
+        .dashboard-btn{
+            display:inline-block;
+            margin-top:25px;
+            padding:12px 25px;
+            background:#0d6efd;
+            color:white;
+            text-decoration:none;
+            border-radius:8px;
+            font-weight:600;
+            transition:0.3s;
+        }
+
+        .dashboard-btn:hover{
+            background:#0b5ed7;
+            transform:translateY(-2px);
+        }
+
+        .stats{
+            display:flex;
+            justify-content:center;
+            gap:20px;
+            margin-bottom:25px;
+            flex-wrap:wrap;
+        }
+
+        .card{
+            background:white;
+            padding:20px;
+            border-radius:10px;
+            min-width:220px;
+            text-align:center;
+            box-shadow:0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .card h3{
+            color:#555;
+            margin-bottom:10px;
+        }
+
+        .card p{
+            font-size:24px;
+            font-weight:bold;
+            color:#0d6efd;
+        }
+
+        @media(max-width:768px){
+
+            body{
+                padding:15px;
+            }
+
+            .table-wrapper{
+                overflow-x:auto;
+            }
+
+            table{
+                min-width:900px;
+            }
+
+            .header h1{
+                font-size:28px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <center>
-        <h1>Leave Reports</h1>
-        <table border="2px">
-            <tr>
-                <th>Staff</th>
-                <th>Email</th>
-                <th>Total Leaves</th>
-                <th>Approved Leaves</th>
-                <th>Rejected Leaves</th>
-                <th>Pending Leaves</th>
-            </tr>
-            <tr>
-                {% for i in reports %}
-                <td>{{i. usernmae}}</td>
-                <td>{{i.email}}</td>
-                <td>{{i.total_leaves}}</td>
-                <td>{{i.approved_leaves}}</td>
-                <td>{{i.rejected_leaves}}</td>
-                <td>{{i.pending_leaves}}</td>
-            </tr>
-            {% endfor %}
+
+<div class="container">
+
+    <div class="header">
+        <h1>📊 Leave Reports</h1>
+        <p>Staff Leave Management System</p>
+    </div>
+
+    <div class="table-wrapper">
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Staff Name</th>
+                    <th>Email</th>
+                    <th>Total Leaves</th>
+                    <th>Pending Leaves</th>
+                    <th>Approved Leaves</th>
+                    <th>Rejected Leaves</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for i in result %}
+                <tr>
+                    <td>{{ i.username }}</td>
+                    <td>{{ i.email }}</td>
+                    <td>{{ i.total_leaves }}</td>
+
+                    <td>
+                        <span class="pending">
+                            {{ i.pending_leaves }}
+                        </span>
+                    </td>
+
+                    <td>
+                        <span class="approved">
+                            {{ i.approved_leaves }}
+                        </span>
+                    </td>
+
+                    <td>
+                        <span class="rejected">
+                            {{ i.rejected_leaves }}
+                        </span>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6">
+                        No leave reports available.
+                    </td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
         </table>
-        <a href="{% url 'admin_dashboard' %}">Back to Dashboard</a>
+
+    </div>
+
+    <center>
+        <a href="{% url 'admin_dashboard' %}" class="dashboard-btn">
+            ← Back to Dashboard
+        </a>
     </center>
+
+</div>
+
 </body>
 </html>

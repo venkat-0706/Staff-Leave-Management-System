@@ -55,7 +55,46 @@ def my_leaves(request):
 
 @login_required
 def leave_reports(request):
-    return render(request,'leaves/reports.html')
+    result = []
+    staff_users = User.objects.filter(profile__role = 'staff')
+    for user in staff_users:
+        total_leaves = Leave.objects.filter(username = user).count()
+
+        pending_leaves = Leave.objects.filter(
+            username = user,
+            status = 'pending'
+        ).count()
+
+        approved_leaves = Leave.objects.filter(
+            username = user, 
+            status = 'approved'
+        ).count()
+
+        rejected_leaves = Leave.objects.filter(
+            username = user, 
+            status = 'rejected'
+        ).count()
+
+        result.append({
+            'username' :  user.username,
+            'email': user.email,
+            'total_leaves': total_leaves,
+            'pending_leaves': pending_leaves,
+            'approved_leaves': approved_leaves,
+            'rejected_leaves':rejected_leaves
+        })
+
+    return render(request, 'leaves/reports.html', {'result': result})
+
+
+        
+
+        
+
+
+
+        
+
 
 
 
