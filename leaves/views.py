@@ -68,7 +68,7 @@ def reject_leave(request,id):
 
 @login_required
 def my_leaves(request):
-    leaves=Leave.objects.filter(username=request.user)
+    leaves=Leave.objects.filter(username=request.user).order_by('-id')
     return render(request,'leaves/my_leaves.html',{'leaves':leaves})
 
 @login_required
