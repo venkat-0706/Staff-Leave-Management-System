@@ -374,6 +374,7 @@ python manage.py test
 ---
 
 ## 🔄 Leave Workflow
+<img src="result/slms.png">
 
 
 ## 🚀 Future Enhancements
