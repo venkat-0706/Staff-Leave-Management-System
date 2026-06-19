@@ -96,7 +96,7 @@ def approve_leave(request, id):
     send_mail(
         subject = 'Leave Request Approved',
         message = f'''
-        Hello{leave.username.username},
+        Hello  {leave.username.username},
 
         Your leave request has been  approved..
         Leave Type: {leave.leave_type}
@@ -120,7 +120,7 @@ def reject_leave(request,id):
     send_mail(
         subject = 'Leave Request has been Rejected',
         message = f'''
-        Hello{leave.username.username},
+        Hello  {leave.username.username},
         Your leave request has been rejected.
         Leave Type: {leave.leave_type}
         Start Date : {leave.start_date}
