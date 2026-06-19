@@ -344,67 +344,38 @@ python manage.py test
 
 ## 📸 Screenshots
 
+### 🏠 Home Page
+<img src="result/home.png">
+
 ### 🔐 Login Page
+<img src="result/login.png">
 
-```text
-[ Add Login Page Screenshot Here ]
-```
+### 📝 Register Page
+<img src="result/register.png">
 
-### 📊 Admin Dashboard
+### 👨‍💼 Admin Dashboard
+<img src="result/admin_dashboard.png">
 
-```text
-[ Add Admin Dashboard Screenshot Here ]
-```
+### 👨‍💻 Staff Dashboard
+<img src="result/staff_dashboard.png">
 
-### 👨‍💼 Staff Dashboard
+### 👥 Manage Staff
+<img src="result/manage_staff.png">
 
-```text
-[ Add Staff Dashboard Screenshot Here ]
-```
+### 📋 Leave Requests
+<img src="result/leave_requests.png">
 
-### 📝 Leave Application Form
+### 📜 Leave History
+<img src="result/leave_history.png">
 
-```text
-[ Add Leave Application Screenshot Here ]
-```
-
-### 📋 Leave Management
-
-```text
-[ Add Leave Management Screenshot Here ]
-```
-
-### 📈 Reports Page
-
-```text
-[ Add Reports Screenshot Here ]
-```
+### 📊 Leave Reports
+<img src="result/leave_reports.png">
 
 ---
 
 ## 🔄 Leave Workflow
+<img src="result/slms.png">
 
-```text
-Staff Login
-      │
-      ▼
-Apply Leave
-      │
-      ▼
-Admin Reviews Request
-      │
- ┌────┴────┐
- ▼         ▼
-Approve   Reject
- │           │
- ▼           ▼
-Status Updated
-      │
-      ▼
-Staff Notification
-```
-
----
 
 ## 🚀 Future Enhancements
 
