@@ -20,9 +20,9 @@ href="{% static 'css/leave_request.css' %}">
 <div class="blob blob1"></div>
 <div class="blob blob2"></div>
 
+
 <div class="container">
 
-```
 <h1>📋 Leave Requests</h1>
 
 <div class="card">
@@ -35,6 +35,8 @@ href="{% static 'css/leave_request.css' %}">
             <th>Email</th>
             <th>Start Date</th>
             <th>End Date</th>
+            <th>Duration</th>
+            <th>Session</th>
             <th>Reason</th>
             <th>Status</th>
             <th>Action</th>
@@ -49,6 +51,14 @@ href="{% static 'css/leave_request.css' %}">
             <td>{{ i.email }}</td>
             <td>{{ i.start_date }}</td>
             <td>{{ i.end_date }}</td>
+            <td>{{i.duration}}</td>
+            <td>
+                {% if i.duration == 'half' %}
+                    {{ i.half_day_session|title }}
+                {% else %}
+        -
+                {% endif %}
+            </td>
             <td>{{ i.reason }}</td>
 
             <td>
@@ -111,7 +121,6 @@ href="{% static 'css/leave_request.css' %}">
     </a>
 
 </div>
-```
 
 </div>
 

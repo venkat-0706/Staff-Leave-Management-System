@@ -1,69 +1,125 @@
 {% load static %}
+
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SLMS | Apply Leave</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="{% static 'css/apply_leave.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="{% static 'css/apply_leave.css' %}">
+
+
 </head>
+
 <body>
 
-    <div class="blob blob1"></div>
-    <div class="blob blob2"></div>
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
 
-    <div class="container">
-        <h1>📅 Apply Leave</h1>
-        <p class="sub">Fill in your leave details below</p>
+<div class="container">
 
-        <form method="POST">
-            {% csrf_token %}
+    <h1>📅 Apply Leave</h1>
+    <p class="sub">Fill in your leave details below</p>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+          <div class="form-group">
+            <label>Staff Name</label>
+            <input type="text"
+                   name="username"
+                   value="{{request.user.username}}"
+                   placeholder="Enter the Staff name"
+                   required>
+        </div> 
+
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email"
+                   name="email"
+                   placeholder="Enter your email"
+                   required>
+        </div>
+
+        <div class="form-group">
+            <label>Leave Type</label>
+            <select name="leave_type" required>
+                <option value="">Select Leave Type</option>
+                <option value="Casual Leave">Casual Leave</option>
+                <option value="Sick Leave">Sick Leave</option>
+                <option value="Emergency Leave">Emergency Leave</option>
+            </select>
+        </div>
 
             <div class="form-group">
-                <label>User Name</label>
-                <input type="text" name="username" placeholder="Enter your username" required>
-            </div>
+    <label>Duration</label>
 
-            <div class="form-group">
-                <label>Leave Type</label>
-                <select name="leave_type" required>
-                    <option value="">Select Leave Type</option>
-                    <option>Casual Leave</option>
-                    <option>Sick Leave</option>
-                    <option>Emergency Leave</option>
-                </select>
-            </div>
+    <select name="duration" id="duration" required>
+        <option value="full">Full Day</option>
+        <option value="half">Half Day</option>
+    </select>
+</div>
 
-            <div class="form-group">
-                <label>Email</label>
-                <input type="email" name="email" placeholder="Enter your email" required>
-            </div>
+<div class="form-group" id="session-box">
+    <label>Half Day Session</label>
 
-            <div class="form-group">
-                <label>Start Date</label>
-                <input type="date" name="start_date" required>
-            </div>
+    <select name="half_day_session">
+        <option value="">Select Session</option>
+        <option value="morning">Morning</option>
+        <option value="afternoon">Afternoon</option>
+    </select>
+</div>
+<p id="leave-info"></p>
+        <div class="form-group">
+            <label>Start Date</label>
+            <input type="date"
+                   name="start_date"
+                   required>
+        </div>
 
-            <div class="form-group">
-                <label>End Date</label>
-                <input type="date" name="end_date" required>
-            </div>
+        <div class="form-group">
+            <label>End Date</label>
+            
+            <input type="date"
+                   name="end_date"
+                   required>
+        </div>
+        <p id="total-days"></p>
 
-            <div class="form-group">
-                <label>Reason</label>
-                <textarea name="reason" placeholder="Enter reason for leave" required></textarea>
-            </div>
+        <div class="form-group">
+            <label>Reason</label>
+            <textarea name="reason"
+                      rows="5"
+                      placeholder="Enter reason for leave"
+                      required></textarea>
+        </div>
 
-            <button type="submit">Apply Leave</button>
-        </form>
+        <button type="submit">
+            Apply Leave
+        </button>
 
-        <a href="{% url 'staff_dashboard' %}" class="back">← Back to Home</a>
-    </div>
+    </form>
 
-    <script src="{% static 'js/apply_leave.js' %}"></script>
+    <a href="{% url 'staff_dashboard' %}" class="back">
+        ← Back to Home
+    </a>
 
+</div>
+<script src="{% static 'js/apply_leave.js' %}?v=2"></script>
 </body>
+
 </html>

@@ -2,7 +2,7 @@ from django.shortcuts import render , redirect
 from django.http import HttpResponse 
 from django.contrib import messages 
 from django.contrib.auth.models import User 
-from leaves.models import Leave 
+from leaves.models import Leave , LeaveBalance
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from datetime import date
@@ -16,12 +16,26 @@ def home(request):
 @csrf_exempt
 def apply_leave(request):
     if request.method == 'POST':
-        username = request.POST['username']
+        print("Form Submitted")
+        print(request.POST)
         leave_type = request.POST['leave_type']
+        duration = request.POST['duration']
+        half_day_session = request.POST.get('half_day_session')
         email = request.POST['email']
         start_date = request.POST['start_date']
-        end_date = request.POST['end_date']
+        end_date = request.POST.get('end_date')
         reason = request.POST['reason']
+
+        if not start_date:
+            messages.error(request,"Start Date is required")
+            return redirect('apply_leave')
+        
+        if duration == 'full' and not end_date:
+            messages.error(request, "End Date is required")
+            return redirect('apply_leave')
+
+        if duration == 'half':
+            end_date = start_date
 
         start_date_obj = date.fromisoformat(start_date)
         end_date_obj = date.fromisoformat(end_date)
@@ -34,13 +48,29 @@ def apply_leave(request):
         if end_date_obj < start_date_obj:
             messages.error(request, "Invalid end Date ! , You cant apply the leave fir the previous date")
             return redirect('apply_leave')
+        
+        if duration == 'half':
+            if not half_day_session:
+                messages.error(request, "Please select morning or Afternoon session")
+                return redirect('apply_leave')
+            
+            if start_date_obj != end_date_obj:
+                messages.error(request,"Half-day leave must be for a single day only")
+                return redirect('apply_leave')
+            
+            total_days = 0.5
+        else:
+            total_days = (end_date_obj - start_date_obj).days+1
  
         Leave.objects.create(
             username = request.user , 
             leave_type = leave_type ,
             email = email,
+            duration = duration,
+            half_day_session = half_day_session,
             start_date = start_date , 
             end_date = end_date , 
+            total_days = total_days,
             reason = reason 
         )
         messages.success(request , 'Leave Applied Successfully')
@@ -55,6 +85,10 @@ def leave_request(request):
 @login_required
 def approve_leave(request, id):
     leave = Leave.objects.get(id = id)
+    if leave.status != 'approved':
+        balance , created = LeaveBalance.objects.get_or_create( user = leave.username)
+        balance.used_leave += leave.total_days
+        balance.save()
     leave.status = 'approved'
     leave.save()
     return redirect('leave_request')
@@ -93,13 +127,21 @@ def leave_reports(request):
             status = 'rejected'
         ).count()
 
+        balance , created = LeaveBalance.objects.get_or_create(
+            user = user
+        )
+
         result.append({
             'username' :  user.username,
             'email': user.email,
-            'total_leaves': total_leaves,
+            'applied_leaves': total_leaves,
             'pending_leaves': pending_leaves,
             'approved_leaves': approved_leaves,
-            'rejected_leaves':rejected_leaves
+            'rejected_leaves':rejected_leaves,
+            'total_leaves' : balance.total_leave,
+            'used_leaves' : balance.used_leave , 
+            'remaining_leaves' : balance.remaining_leave,
+
         })
 
     return render(request, 'leaves/reports.html', {'result': result})

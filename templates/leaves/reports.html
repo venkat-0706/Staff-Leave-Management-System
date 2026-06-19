@@ -2,119 +2,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Leave Reports | SLMS</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-<link rel="stylesheet"
-href="{% static 'css/reports.css' %}">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leave Reports | SLMS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/reports.css' %}">
 </head>
 <body>
 
-<div class="blob blob1"></div>
-<div class="blob blob2"></div>
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
 
-<div class="container">
+    <div class="container">
+        <div class="header">
+            <h1>📊 Leave Reports</h1>
+            <p>Staff Leave Management System</p>
+        </div>
 
-    <div class="header">
-        <h1>📊 Leave Reports</h1>
-        <p>Staff Leave Management System</p>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="🔍 Search by Staff Name or Email...">
+        </div>
+        
+
+        <div class="table-wrapper">
+            <table id="reportTable">
+                <thead>
+                    <tr>
+                        <th>Staff Name</th>
+                        <th>Email</th>
+                        <th>Applied Leaves</th>
+                        <th>Pending</th>
+                        <th>Approved</th>
+                        <th>Rejected</th>
+                        <th>Total Balance</th>
+                        <th>Used Leaves</th>
+                        <th>Remaining Leaves</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in result %}
+                    <tr>
+                        <td>{{ i.username }}</td>
+                        <td>{{ i.email }}</td>
+                        <td>{{ i.applied_leaves }}</td>
+                        <td>
+                            <span class="pending">{{ i.pending_leaves }}</span>
+                        </td>
+                        <td>
+                            <span class="approved">{{ i.approved_leaves }}</span>
+                        </td>
+                        <td>
+                            <span class="rejected">{{ i.rejected_leaves }}</span>
+                        </td>
+                        <td>{{ i.total_leaves }}</td>
+                        <td>
+                            <span class="approved">{{ i.used_leaves }}</span>
+                        </td>
+                        <td>
+                            <span class="pending">{{ i.remaining_leaves }}</span>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="9" style="text-align: center;">No Leave Reports Available</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="{% url 'admin_dashboard' %}" class="dashboard-btn">← Back to Dashboard</a>
+        </div>
     </div>
 
-    <!-- Search Field -->
-
-    <div class="search-container">
-
-        <input
-            type="text"
-            id="searchInput"
-            placeholder="🔍 Search by Staff Name or Email...">
-
-    </div>
-
-    <div class="table-wrapper">
-
-        <table id="reportTable">
-
-            <thead>
-
-                <tr>
-                    <th>Staff Name</th>
-                    <th>Email</th>
-                    <th>Total Leaves</th>
-                    <th>Pending Leaves</th>
-                    <th>Approved Leaves</th>
-                    <th>Rejected Leaves</th>
-                </tr>
-
-            </thead>
-
-            <tbody>
-
-                {% for i in result %}
-
-                <tr>
-
-                    <td>{{ i.username }}</td>
-                    <td>{{ i.email }}</td>
-                    <td>{{ i.total_leaves }}</td>
-
-                    <td>
-                        <span class="pending">
-                            {{ i.pending_leaves }}
-                        </span>
-                    </td>
-
-                    <td>
-                        <span class="approved">
-                            {{ i.approved_leaves }}
-                        </span>
-                    </td>
-
-                    <td>
-                        <span class="rejected">
-                            {{ i.rejected_leaves }}
-                        </span>
-                    </td>
-
-                </tr>
-
-                {% empty %}
-
-                <tr>
-
-                    <td colspan="6">
-                        No leave reports available.
-                    </td>
-
-                </tr>
-
-                {% endfor %}
-
-            </tbody>
-
-        </table>
-
-    </div>
-
-    <center>
-
-        <a href="{% url 'admin_dashboard' %}"
-           class="dashboard-btn">
-
-            ← Back to Dashboard
-
-        </a>
-
-    </center>
-
-</div>
-
-<script src="{% static 'js/reports.js' %}"></script>
-
+    <script src="{% static 'js/reports.js' %}"></script>
 </body>
 </html>
