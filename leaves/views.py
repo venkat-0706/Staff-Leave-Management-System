@@ -6,6 +6,8 @@ from leaves.models import Leave , LeaveBalance
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from datetime import date
+from django.core.mail import send_mail
+from django.conf import settings
 
 
 def home(request):
@@ -91,6 +93,23 @@ def approve_leave(request, id):
         balance.save()
     leave.status = 'approved'
     leave.save()
+    send_mail(
+        subject = 'Leave Request Approved',
+        message = f'''
+        Hello{leave.username.username},
+
+        Your leave request has been  approved..
+        Leave Type: {leave.leave_type}
+        Start Date : {leave.start_date}
+        End Date : {leave.end_date}
+
+        Regards, 
+        SLMS Team
+     ''' ,
+    from_email = settings.EMAIL_HOST_USER,
+    recipient_list = [leave.email],
+    fail_silently = False,
+    )
     return redirect('leave_request')
 
 @login_required
@@ -98,6 +117,22 @@ def reject_leave(request,id):
     leave = Leave.objects.get(id = id)
     leave.status = 'rejected'
     leave.save()
+    send_mail(
+        subject = 'Leave Request has been Rejected',
+        message = f'''
+        Hello{leave.username.username},
+        Your leave request has been rejected.
+        Leave Type: {leave.leave_type}
+        Start Date : {leave.start_date}
+        End Date : {leave.end_date}
+
+        Regards,
+        SLMS Team
+        ''',
+        from_email = settings.EMAIL_HOST_USER,
+        recipient_list = [leave.email],
+        fail_silently = False,
+    )
     return redirect('leave_request')
 
 @login_required
@@ -108,7 +143,7 @@ def my_leaves(request):
 @login_required
 def leave_reports(request):
     result = []
-    staff_users = User.objects.filter(profile__role = 'staff')
+    staff_users = User.objects.filter(profile__role = 'staff').order_by('-id')
     for user in staff_users:
         total_leaves = Leave.objects.filter(username = user).count()
 
