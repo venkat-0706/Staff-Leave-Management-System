@@ -14,6 +14,33 @@
 </head>
 <body>
 
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+    <div class="logo">
+        <h2>SLMS</h2>
+        <p>Admin Panel</p>
+    </div>
+    <div class="menu">
+        <a href="{% url 'admin_dashboard' %}"><i class="fas fa-house"></i><span>Dashboard</span></a>
+        <a href="{% url 'leave_request' %}"><i class="fas fa-file-signature"></i><span>Leave Requests</span></a>
+        <a href="{% url 'manage_staff' %}"><i class="fas fa-users"></i><span>Manage Staff</span></a>
+        <a href="{% url 'reports' %}"><i class="fas fa-chart-column"></i><span>Reports</span></a>
+        <a href="{% url 'logout' %}"><i class="fas fa-right-from-bracket"></i><span>Logout</span></a>
+    </div>
+</div>
+
+
+<!-- Main Content -->
+<div class="main" id="main-content" style="margin-left: 280px; width: calc(100% - 280px); transition: margin-left 0.3s, width 0.3s; position: relative; min-height: 100vh;">
+    <button class="toggle-sidebar-btn" onclick="toggleSidebar()" style="position: absolute; top: 20px; left: -15px; width: 30px; height: 30px; background: #4f46e5; color: white; border: none; border-radius: 50%; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2); z-index: 1001; display: flex; align-items: center; justify-content: center; transition: 0.3s;"><i class="fas fa-chevron-left" id="toggle-icon"></i></button>
+
+
+<!-- Back Button -->
+<button onclick="history.back()" style="position: fixed; top: 20px; left: 20px; width: 40px; height: 40px; border-radius: 50%; background-color: white; border: none; box-shadow: 0 2px 5px rgba(0,0,0,0.2); cursor: pointer; z-index: 9999; display: flex; align-items: center; justify-content: center; color: black; font-size: 20px; font-weight: bold;" title="Go Back">
+    &#8592;
+</button>
+
+
     <div class="circle"></div>
     <div class="circle"></div>
     <div class="circle"></div>
@@ -101,6 +128,56 @@
     {% endif %}
 
     <script src="{% static 'js/add_staff.js' %}"></script>
+
+
+</div>
+
+
+<style>
+.sidebar { width: 280px; background: linear-gradient(180deg,#4f46e5,#6d28d9); color: white; padding: 30px 20px; position: fixed; height: 100vh; box-shadow: 0 10px 30px rgba(0,0,0,.2); left: 0; top: 0; transition: width 0.3s; overflow-x: hidden; z-index: 1000; }
+.sidebar .logo { text-align: center; margin-bottom: 40px; }
+.sidebar .logo h2 { font-size: 32px; font-weight: 800; }
+.sidebar .logo p { font-size: 13px; opacity: .8; }
+.sidebar .menu a { display: flex; align-items: center; gap: 15px; text-decoration: none; color: white; padding: 15px 18px; border-radius: 12px; margin-bottom: 12px; transition: .4s; }
+.sidebar .menu a:hover { background: rgba(255,255,255,.15); transform: translateX(8px); }
+.sidebar .menu i { font-size: 18px; min-width: 25px; text-align: center; }
+
+.sidebar.collapsed { width: 80px; }
+.sidebar.collapsed .logo h2 { font-size: 20px; }
+.sidebar.collapsed .logo p { display: none; }
+.sidebar.collapsed .menu span { display: none; }
+.sidebar.collapsed .menu a:hover { transform: translateX(5px); }
+
+.main.collapsed { margin-left: 80px !important; width: calc(100% - 80px) !important; }
+.toggle-sidebar-btn:hover { background: #372fc9 !important; transform: scale(1.1) !important; }
+</style>
+<script>
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const main = document.getElementById('main-content');
+        const icon = document.getElementById('toggle-icon');
+        sidebar.classList.toggle('collapsed');
+        main.classList.toggle('collapsed');
+        if (sidebar.classList.contains('collapsed')) {
+            icon.classList.remove('fa-chevron-left');
+            icon.classList.add('fa-chevron-right');
+            localStorage.setItem('sidebar_collapsed', 'true');
+        } else {
+            icon.classList.remove('fa-chevron-right');
+            icon.classList.add('fa-chevron-left');
+            localStorage.setItem('sidebar_collapsed', 'false');
+        }
+    }
+    
+    document.addEventListener("DOMContentLoaded", function() {
+        if (localStorage.getItem('sidebar_collapsed') === 'true') {
+            document.getElementById('sidebar').classList.add('collapsed');
+            document.getElementById('main-content').classList.add('collapsed');
+            document.getElementById('toggle-icon').classList.remove('fa-chevron-left');
+            document.getElementById('toggle-icon').classList.add('fa-chevron-right');
+        }
+    });
+</script>
 
 </body>
 </html>

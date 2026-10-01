@@ -21,9 +21,15 @@ href="{% static 'css/admin.css' %}">
 
 <body>
 
+<!-- Back Button -->
+<button onclick="history.back()" style="position: fixed; top: 20px; left: 20px; width: 40px; height: 40px; border-radius: 50%; background-color: white; border: none; box-shadow: 0 2px 5px rgba(0,0,0,0.2); cursor: pointer; z-index: 9999; display: flex; align-items: center; justify-content: center; color: black; font-size: 20px; font-weight: bold;" title="Go Back">
+    &#8592;
+</button>
+
+
 <!-- Sidebar -->
 
-<div class="sidebar">
+<div class="sidebar" id="sidebar">
 
     <div class="logo">
         <h2>SLMS</h2>
@@ -63,7 +69,8 @@ href="{% static 'css/admin.css' %}">
 
 <!-- Main Content -->
 
-<div class="main">
+<div class="main" id="main-content">
+    <button class="toggle-sidebar-btn" onclick="toggleSidebar()" style="position: absolute; top: 20px; left: -15px; width: 30px; height: 30px; background: #4f46e5; color: white; border: none; border-radius: 50%; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2); z-index: 1001; display: flex; align-items: center; justify-content: center; transition: 0.3s;"><i class="fas fa-chevron-left" id="toggle-icon"></i></button>
 
     <div class="header" data-aos="fade-down">
 
@@ -170,6 +177,43 @@ href="{% static 'css/admin.css' %}">
 
 </div>
 
+<style>
+.sidebar { transition: width 0.3s; overflow-x: hidden; z-index: 1000; }
+.sidebar.collapsed { width: 80px; }
+.sidebar.collapsed .logo h2 { font-size: 20px; }
+.sidebar.collapsed .logo p { display: none; }
+.sidebar.collapsed .menu span { display: none; }
+.main { transition: margin-left 0.3s; position: relative; }
+.main.collapsed { margin-left: 80px; }
+.toggle-sidebar-btn:hover { background: #372fc9 !important; transform: scale(1.1); }
+</style>
+<script>
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const main = document.getElementById('main-content');
+        const icon = document.getElementById('toggle-icon');
+        sidebar.classList.toggle('collapsed');
+        main.classList.toggle('collapsed');
+        if (sidebar.classList.contains('collapsed')) {
+            icon.classList.remove('fa-chevron-left');
+            icon.classList.add('fa-chevron-right');
+            localStorage.setItem('sidebar_collapsed', 'true');
+        } else {
+            icon.classList.remove('fa-chevron-right');
+            icon.classList.add('fa-chevron-left');
+            localStorage.setItem('sidebar_collapsed', 'false');
+        }
+    }
+    
+    document.addEventListener("DOMContentLoaded", function() {
+        if (localStorage.getItem('sidebar_collapsed') === 'true') {
+            document.getElementById('sidebar').classList.add('collapsed');
+            document.getElementById('main-content').classList.add('collapsed');
+            document.getElementById('toggle-icon').classList.remove('fa-chevron-left');
+            document.getElementById('toggle-icon').classList.add('fa-chevron-right');
+        }
+    });
+</script>
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 
 <script src="{% static 'js/admin.js' %}"></script>
